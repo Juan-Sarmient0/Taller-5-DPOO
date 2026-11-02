@@ -26,13 +26,13 @@ public class IngredienteTest
     @Test
     void testGetNombre( )
     {
-        assertEquals( "tomate", ingrediente1.getNombre( ), "El nombre del ingrediente no es el esperado." );
+        assertEquals( "tomate", ingrediente1.getNombre( ));
     }
 
     @Test
     void testGetCostoAdicional( )
     {
-        assertEquals( 1000, ingrediente1.getCostoAdicional( ), "El costo adicional del ingrediente no es el esperado." );
+        assertEquals( 1000, ingrediente1.getCostoAdicional( ) );
     }
 
 }

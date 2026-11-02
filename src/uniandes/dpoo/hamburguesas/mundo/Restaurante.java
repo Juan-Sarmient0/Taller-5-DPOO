@@ -101,8 +101,13 @@ public class Restaurante
         if( pedidoEnCurso == null )
             throw new NoHayPedidoEnCursoException( );
 
+        File carpeta = new File( CARPETA_FACTURAS );
+        if( !carpeta.exists( ) )
+            carpeta.mkdirs( );
+
         String nombreArchivo = PREFIJO_FACTURAS + pedidoEnCurso.getIdPedido( ) + ".txt";
         pedidoEnCurso.guardarFactura( new File( CARPETA_FACTURAS + nombreArchivo ) );
+        pedidos.add( pedidoEnCurso );
         pedidoEnCurso = null;
     }
 
