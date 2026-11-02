@@ -14,6 +14,8 @@ import uniandes.dpoo.hamburguesas.excepciones.NoHayPedidoEnCursoException;
 import uniandes.dpoo.hamburguesas.excepciones.YaHayUnPedidoEnCursoException;
 import uniandes.dpoo.hamburguesas.mundo.Pedido;
 import uniandes.dpoo.hamburguesas.mundo.Restaurante;
+import uniandes.dpoo.hamburguesas.excepciones.ProductoFaltanteException;
+import uniandes.dpoo.hamburguesas.excepciones.ProductoRepetidoException;
 
 public class RestauranteTest
 {
@@ -77,4 +79,32 @@ public class RestauranteTest
         Exception excepcion = assertThrows( YaHayUnPedidoEnCursoException.class, ( ) -> this.restaurante.iniciarPedido( "Ana", "Calle 2" ) );
         assertEquals( "Ya existe un pedido en curso, para el cliente Juan así que no se puede crear un pedido para Ana", excepcion.getMessage( ) );
     }
+    
+    @Test
+    public void testProductoRepetidoException( ) throws Exception
+    {
+        restaurante.cargarInformacionRestaurante( ingredientes, menu, combos );
+        Exception excepcion = assertThrows( ProductoRepetidoException.class,
+                ( ) -> this.restaurante.cargarInformacionRestaurante( menu, menu, combos ) );
+        assertEquals( "El producto corral está repetido", excepcion.getMessage( ) );
+    }
+
+    @Test
+    public void testComboRepetidoException( ) throws Exception
+    {
+        restaurante.cargarInformacionRestaurante( ingredientes, menu, combos );
+        Exception excepcion = assertThrows( ProductoRepetidoException.class,
+                ( ) -> this.restaurante.cargarInformacionRestaurante( menu, ingredientes, combos ) );
+        assertEquals( "El producto combo corral está repetido", excepcion.getMessage( ) );
+    }
+
+    @Test
+    public void testProductoFaltanteException( ) throws Exception
+    {
+        Exception excepcion = assertThrows( ProductoFaltanteException.class,
+                ( ) -> this.restaurante.cargarInformacionRestaurante( ingredientes, ingredientes, combos ) );
+        assertEquals( "El producto malteada no aparece en la información del restaurante".replace( "malteada", "corral" ), excepcion.getMessage( ) );
+    }
+    
+    
 }
